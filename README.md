@@ -1,2 +1,2 @@
-# DATA_BIOL3100_REED 
+# Data_Course_REED
 This README file contains information about my uploaded assignments
