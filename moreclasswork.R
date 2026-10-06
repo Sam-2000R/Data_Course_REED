@@ -108,3 +108,64 @@ cor(study$hours, study$score)
 lm() means linear model
 y ~ x means 'y explained by x'
 fit <- lm(score ~ hours, data = study)
+
+library(qrcode) #library means open package
+
+url <- 'https:countryoaks.skepsecurity.com'
+qr <- qr_code(url)
+qr
+plot(qr)
+
+install.packages('tidyverse')
+library(tidyverse)
+%>% #pipe, object from left is input to right
+  
+  ?palmerpenguins
+library(palmerpenguins)
+library(tidyverse)
+penguins
+View(penguins)
+
+mean(penguins$bill_length_mm, na.rm=TRUE)
+penguins %>%
+  group_by(species) %>%
+  summarise(lengthbill = mean(bill_length_mm, na.rm = TRUE),
+            maxoflength = max(bill_length_mm, na.rm = TRUE)
+  )
+
+  
+### 9/29/26
+# find pengins body mass > 5000 and bill length > avg
+# how many male and female
+# what are their max weight and max bill length for each island
+# add new col to dataset indicating if they meet the cririas or not
+
+library(tidyverse)
+library(palmerpenguins)
+criteria <- penguins %>%
+  filter(body_mass_g > 5000 &
+         bill_length_mm > (mean(penguins$bill_length_mm, na.rm = TRUE)))
+
+criteria %>% count(sex)
+
+criteria %>%
+  group_by(island) %>%
+  summarise(max_mass = max(body_mass_g, na.rm = TRUE),
+            max_bill = max(bill_length_mm, na.rm = TRUE))
+
+penguins <- penguins %>%
+  mutate(meet_criteria = body_mass_g > 5000 &
+           bill_length_mm > (mean(penguins$bill_length_mm, na.rm = TRUE)))
+  
+View(penguins)
+library(ggplot2)
+penguins %>%
+  drop_na() %>%
+  ggplot(aes(x = body_mass_g,
+           y= bill_length_mm,
+           color = sex,
+           shape = island))+
+  geom_point() +
+  geom_abline() 
+ggsave()
+
