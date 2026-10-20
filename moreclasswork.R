@@ -314,4 +314,262 @@ df <- data.frame(weight= c(light, dark), group = c(rep(1, n1, rep(2, n2)))
                  ggpairs(penguins)
                  
                  
+                 #make a graph using penguin data
+                 #try to use new geom
+                 #overlap at least two geom
+                 #add title for the plot
+                 #bonus: adjust title, axis, or other labels
                  
+                 library(ggplot2)
+                 library(palmerpenguins)
+                 library(tidyverse)
+                 library(ggimage)
+                 View(penguins)
+                 
+                 penguins %>%
+                   drop_na() %>%
+                   ggplot(aes(x = body_mass_g,
+                              y= bill_length_mm,
+                              color = sex,
+                              shape = island))+
+                   geom_point() +
+                   geom_abline() 
+                 
+                 penguin_img_url <- ""
+                 
+                 data_prepared <- penguins %>%
+                   drop_na() %>%
+                   mutate(image_url = penguin_img_url)
+                 
+                 data_prepared %>%
+                   drop_na() %>%
+                   ggplot(aes(x = sex,
+                              y = body_mass_g,
+                   )) +
+                   geom_violin(fill = "skyblue", color = "navy", alpha = 0.6, draw_quantiles = c(0.25, 0.5, 0.75))+
+                   stat_summary(fun = "median", feom = "point", color = "navy", size = 2)
+                 labs(title = "Distribution of Penguin Body Mass by Sex",
+                      x = NULL,
+                      y = 'Body Mass (g)') +
+                   theme_minimal(base_size = 12) +
+                   theme(
+                     plot.title = element_text(face = "bold"),
+                     panel.grid.major.x = element_blank()
+                   )
+                 
+                 
+                 penguins %>%
+                   drop_na() %>%
+                   ggplot(aes(x = sex, y = body_mass_g, fill = sex)) +
+                   geom_violin(alpha = 0.7, color = "white", linewidth = 0.8) +
+                   geom_boxplot(width = 0.1, fill = "white", color = "grey20", outlier.shape = NA) +
+                   scale_fill_brewer(palette = "Pokemon") +
+                   labs(
+                     title = "Body Mass Distribution Across Penguin Sexes",
+                     x = NULL,
+                     y = "Body Mass (g)"
+                   ) +
+                   theme_classic(base_size = 12) +
+                   theme(
+                     legend.position = "none",
+                     plot.title = element_text(face = "bold")
+                   )
+                 
+                 
+                 
+                 
+                 library(palmerpenguins)
+                 library(ggplot2)
+                 library(dplyr)
+                 library(ggimage)
+                 library(magick)
+                 library(tidyr)
+                 
+                 original_path <- "C:/Users/samue/Bio_Stats/Data_Course_REED/close-up-of-a-gentoo-penguin-with-detailed-plumage-and-orange-beak-cut-out-png-2685192404.png"
+                 small_path    <- "C:/Users/samue/Bio_Stats/Data_Course_REED/penguin_small.png"
+                 
+                 image_read(original_path) |>
+                   image_trim() |>            # crops away empty transparent border
+                   image_scale("x100") |>     # 100 px tall, width keeps aspect ratio
+                   image_write(small_path, format = "png")
+                 
+                 file.size(small_path) / 1024  # size in KB; should be small
+                 
+                 # Set the path to your downloaded JPG file
+                 local_image_path <- small_path
+                 
+                 # Filter out missing values and assign the local file path
+                 data_prepared <- penguins %>%
+                   drop_na() %>%
+                   mutate(image_path = local_image_path)
+                 
+                 # Generate the plot
+                 p <- data_prepared %>%
+                   ggplot(aes(x = sex, y = body_mass_g, fill = sex)) +
+                   
+                   # Base violin and boxplot layers:
+                   geom_violin(alpha = 0.5, color = "white", linewidth = 0.8) +
+                   geom_boxplot(width = 0.1, fill = "white", color = "grey20", outlier.shape = NA) +
+                   
+                   # Jittered image layer using your local file
+                   geom_image(aes(x = sex, y = body_mass_g, image = image_path), 
+                              size = 0.05,
+                              by = "height",
+                              position = position_jitter(width = 0.2, height = 0),
+                              alpha = 0.8) +
+                   
+                   # Styling and labels:
+                   scale_fill_brewer(palette = "Set2") +
+                   labs(
+                     title = "Body Mass Distribution with Jittered Penguin Images",
+                     x = NULL,
+                     y = "Body Mass (g)"
+                   ) +
+                   theme_minimal(base_size = 12) +
+                   theme(
+                     legend.position = "none",
+                     plot.title = element_text(face = "bold"),
+                     panel.grid.major.x = element_blank()
+                   )
+                 print(p)  
+                 
+                 
+                 obj <- read.delim("C:/Users/samue/Bio_Stats/Data_Course_REED/Data/DatasaurusDozen.tsv")
+                 View(obj)
+                 
+                 
+                 library(gapminder)
+                 library(gganimate)
+                 library(gifski)
+                 library(av)
+                 
+                 View(gapminder)
+                 after2000 <- gapminder %>%
+                   drop_na() %>%
+                   group_by(country, year) %>%
+                   print(after2000)
+                 ggplot(aes(x = country_codes)) +
+                   geom_histogram(fill = 'blue')
+                 names(gapminder)\
+                 glimpse(gapminder)
+                 unique(gapminder$country)
+                 range(gapminder$year)
+                 
+                 gapminder %>%
+                   ggplot(aes(x = lifeExp,
+                              y = gdpPercap,
+                              color = continent)) +
+                   geom_point(aes(size = 4)) + 
+                   geom_text(aes(label = 'country', vjust = 1.5) +
+                               facet_wrap(~ continent) 
+                             transition_time(time = year) 
+                             labs(title = '2007{frame_time}')
+                             
+                             anim_save('my_anim.gif')
+                             ##gganimate.com
+                             library(ggplot2)
+                             library(dplyr)
+                             library(tidyr)
+                             library(scales)
+                             
+                             # ---- Raw hemocytometer counts: 5 squares per plate ----
+                             raw <- tibble(
+                               day   = c(1, 1, 2, 2, 3, 3),
+                               plate = c(1, 2, 1, 2, 1, 2),
+                               sq1 = c(13,  7, 19, 27, 13,  4),
+                               sq2 = c( 9,  5, 24, 20, 14,  6),
+                               sq3 = c(13,  7, 28, 15, 11,  7),
+                               sq4 = c( 8,  0, 13, 17,  9, 10),
+                               sq5 = c( 4,  3, 20, 15, 18,  5)
+                             )
+                             
+                             hrs_elapsed <- c(`1` = 26.5, `2` = 22.0, `3` = 23.5)  # hours since previous count
+                             susp_vol    <- c(`1` = 2,    `2` = 2,    `3` = 5)     # mL; 4 mL media added on Day 3
+                             
+                             counts <- raw %>%
+                               rowwise() %>%
+                               mutate(avg_sq = mean(c(sq1, sq2, sq3, sq4, sq5))) %>%
+                               ungroup() %>%
+                               mutate(
+                                 cells_per_mL    = avg_sq * 2 * 1e4,
+                                 cells_per_plate = cells_per_mL * susp_vol[as.character(day)],
+                                 cum_hours       = cumsum(hrs_elapsed)[as.character(day)]
+                               )
+                             
+                             day0 <- tibble(day = 0, plate = c(1, 2), cells_per_plate = 2e5, cum_hours = 0)
+                             
+                             curve_dat <- bind_rows(day0, counts %>% select(day, plate, cells_per_plate, cum_hours)) %>%
+                               mutate(plate = factor(plate, labels = c("Plate 1", "Plate 2")))
+                             
+                             mean_dat <- curve_dat %>%
+                               group_by(cum_hours) %>%
+                               summarise(cells_per_plate = mean(cells_per_plate), .groups = "drop")
+                             
+                             # ---- Monotone spline interpolation (smooth, never overshoots the data) ----
+                             smooth_it <- function(x, y, n = 400) {
+                               f <- splinefun(x, y, method = "monoH.FC")
+                               xx <- seq(min(x), max(x), length.out = n)
+                               tibble(cum_hours = xx, cells_per_plate = f(xx))
+                             }
+                             
+                             sm_plates <- curve_dat %>%
+                               group_by(plate) %>%
+                               group_modify(~ smooth_it(.x$cum_hours, .x$cells_per_plate)) %>%
+                               ungroup()
+                             
+                             sm_mean <- smooth_it(mean_dat$cum_hours, mean_dat$cells_per_plate)
+                             
+                             # Shaded band between the two plates = spread across replicates
+                             band <- sm_plates %>%
+                               pivot_wider(names_from = plate, values_from = cells_per_plate) %>%
+                               rename(p1 = `Plate 1`, p2 = `Plate 2`) %>%
+                               mutate(lo = pmin(p1, p2), hi = pmax(p1, p2))
+                             
+                             pal <- c("Plate 1" = "#1B9E8F", "Plate 2" = "#E07A3F")
+                             
+                             ggplot() +
+                               geom_ribbon(data = band, aes(cum_hours, ymin = lo, ymax = hi),
+                                           fill = "#4C6EF5", alpha = 0.10) +
+                               geom_line(data = sm_plates,
+                                         aes(cum_hours, cells_per_plate, colour = plate),
+                                         linewidth = 0.7, linetype = "22", alpha = 0.9) +
+                               geom_line(data = sm_mean, aes(cum_hours, cells_per_plate),
+                                         colour = "#2B3A67", linewidth = 1.5) +
+                               geom_point(data = curve_dat,
+                                          aes(cum_hours, cells_per_plate, colour = plate, shape = plate),
+                                          size = 2.6, stroke = 1) +
+                               geom_point(data = mean_dat, aes(cum_hours, cells_per_plate),
+                                          colour = "#2B3A67", fill = "white", shape = 21,
+                                          size = 3.4, stroke = 1.3) +
+                               scale_colour_manual(values = pal, name = NULL) +
+                               scale_shape_manual(values = c(16, 17), name = NULL) +
+                               scale_x_continuous(breaks = c(0, 26.5, 48.5, 72),
+                                                  expand = expansion(mult = c(0.02, 0.04))) +
+                               scale_y_continuous(labels = label_comma(),
+                                                  expand = expansion(mult = c(0.04, 0.08))) +
+                               labs(x = "Hours Elapsed Since Plating",
+                                    y = "Cells Per Plate") +
+                               theme_minimal(base_size = 11) +
+                               theme(
+                                 panel.grid.minor  = element_blank(),
+                                 panel.grid.major.x = element_blank(),
+                                 panel.grid.major.y = element_line(colour = "grey88", linewidth = 0.3),
+                                 axis.line          = element_line(colour = "grey30", linewidth = 0.4),
+                                 axis.ticks         = element_line(colour = "grey30", linewidth = 0.3),
+                                 legend.position    = c(0.14, 0.88),
+                                 legend.background  = element_rect(fill = alpha("white", 0.8), colour = NA),
+                                 legend.key.height  = unit(0.8, "lines"),
+                                 plot.margin        = margin(6, 10, 4, 6)
+                               )
+                             
+                             ggsave("growth_curve.png", width = 6.2, height = 3.1, dpi = 300)
+                             data(package = .packages(all.available = TRUE))
+                             
+                             library(tidyverse)
+                             library(MASS)
+                             data(mammals)
+                             
+                             ?mammals
+                             View(mammals)
+                             str(mammals)
+                             
