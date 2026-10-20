@@ -169,3 +169,149 @@ penguins %>%
   geom_abline() 
 ggsave()
 
+library(palmerpenguins)
+library(ggplot2)
+view(penguins)
+penguins %>%
+  group_by(island) %>%
+  summarize(mean_body_mass = mean(body_mass_g, na.rm=TRUE)) %>%
+    ggplot(aes(x = island, y = mean_body_mass)) +
+    geom_col()
+view(penguins)
+ # data set sources
+google data search
+kaggle
+
+library(dplyr)
+
+#create data frame with scores
+# info: N(73,11) N means "normal distribution/bell curve" 
+# U or M is the mean. Sigma is the standard deviation, indicates how data is spread around the curve.
+# So in N(73,11) 72 is mean and sigma is 11.
+
+exam_data <- data.frame(
+  student = c("Student A", "Student B"),
+  first_score = c(44, 95)
+)
+
+old_mean <- 75
+old_sd <- 10
+
+new_mean <- 62
+new_sd <- 18
+
+# in this problem we take find the z score using the origional data
+# then we solve for x in the new distribution using the old known Z
+# Z = X-U/Sigma (u is is M)
+
+#mutate() creates new colums in the data set by calulating existing columsn. Old>new, goes column by column
+processed_data <- exam_data %>%
+  mutate(
+    z_score = ((first_score - old_mean)/old_sd)
+    # Calculate the zscore using the old distrbution
+    # Then calulate the new Z score using the target distribution
+    # Then round the nearest integer 
+    
+    #view results
+    print(processed_data)
+  )
+
+#9/23/26
+
+#set seed for reproducibility
+set.seed(123)
+
+#define sample parameters
+n <- 100 #total sample size
+x <- 35 # number who agree
+p_hat <- x/n #sample proportion
+
+#recreate origional sample
+original_sample <- c(rep(1, x), rep(0, n-x))
+
+#generate bootstrap distribution
+bootstrap <- replicate(10000, {
+  boot_sample <- sample(original_sample, size = n, replace = TRUE)
+  mean(boot_sample)
+})
+
+# estimate standard error
+se <- sd(bootstrap)
+round(se, 3)
+
+# calulated 95% confidence interval
+ci_lower <- p_hat - (2 * se)
+ci_upper <- p_hat + (2 * se)
+
+round(c(lower = ci_lower, ci_upper), 3)
+
+#graph it
+library(ggplot2)
+# Store vector as data frame
+df_boot <- data.frame(p_hat_boot = bootstrap)
+
+ggplot(df_boot, aes(x = p_hat_boot)) +
+  geom_histogram(fill = "skyblue", color = "white", bins = 30) +
+  geom_vline(xintercept = p_hat, color = "red", linewidth = 1) +
+  geom_vline(xintercept = c(ci_lower, ci_upper), color = "blue", linetype = "dashed", linewidth = 1) +
+  labs(
+    title = "Bootstrap Distribution",
+    x = "Sample Proportion",
+    y = "Count"
+  ) +
+  theme_minimal()
+
+
+#q27
+male = c(3,1,12,12,0,4,10,4,5,5,2,10,10)
+n1 = length(male)
+female = c(10,3,2,10,3,2,0,1,6,1,5)
+n2 = length(female)
+
+stat = mean(male) - mean (female)
+
+xbar.d = replicate(2000, mean(sample(male, size = , replace = TRUE)) - 
+                     mean(sample(male, size = , replace = TRUE))
+)
+SE = sd(xbar.d)
+stat+c(-1, 1)*2*SE #95% confidance interval
+quantile(xbar.d, c(0.025, 0.975))
+light = c(9.17,6.94,4.99,1.71,5.43,10.26,4.67,11.67,7.15,5.33)
+n1= length(light)
+n1
+
+dark = c(2.83,4.60,6.52,2.27,5.95,4.21,4.00,2.53)
+n2 = length(dark)
+n2
+
+df <- data.frame(weight= c(light, dark), group = c(rep(1, n1, rep(2, n2)))
+                 View(df)
+                 
+                 library(UsingR)
+                 DOTplot(weight ~ group, df)
+                 
+                 library(dplyr)
+                 
+                 df %>% 
+                   group_by(group) %>%
+                   summarize(xbar = mean(weight),
+                             sd = sd(weight)
+                             n=n()
+                   )
+                 
+                 
+                 Dat %>%
+                   Group_By(dataset) %>%
+                   summarize(avg)
+                 
+                 #package GGally
+                 install.packages(c("GGally", "palmerpenguins"))
+                 library(tidyverse)
+                 library(ggplot2)
+                 library(GGally)
+                 library(palmerpenguins)
+                 penguins
+                 ggpairs(penguins)
+                 
+                 
+                 
