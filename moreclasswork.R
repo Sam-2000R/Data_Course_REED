@@ -573,3 +573,35 @@ df <- data.frame(weight= c(light, dark), group = c(rep(1, n1, rep(2, n2)))
                              View(mammals)
                              str(mammals)
                              
+                             Dat %>%
+                               Group_By(dataset) %>%
+                               summarize(avg)
+                             
+                             #package GGally
+                             install.packages(c("GGally", "palmerpenguins"))
+                             library(tidyverse)
+                             library(GGally)
+                             library(palmerpenguins)
+                             penguins
+                             ggpairs(penguins)
+                             
+                             
+                             p1 = penguins %>% 
+                               drop_na(species, sex) %>% 
+                               group_by(species) %>% 
+                               ggplot(aes(x = bill_depth_mm,
+                                          y = body_mass_g,
+                                          color = sex)) +
+                               geom_point(alpha = .75, size = 4) +
+                               facet_wrap(~species) +
+                               scale_color_viridis_d(end = 0.8) +
+                               labs(x = 'Bill depth (mm)', 
+                                    y = 'Body mass (g)',
+                                    color = 'Sex') + 
+                               theme_bw() +
+                               theme(strip.background = element_blank(),
+                                     strip.text = element_text(face = 'bold', size = 12),
+                                     axis.title = element_text(face = 'bold', size = 12)
+                               )
+                             p1
+                             
