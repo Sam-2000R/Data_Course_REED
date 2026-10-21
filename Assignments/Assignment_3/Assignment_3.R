@@ -43,7 +43,7 @@ vector1 <= 5
 vector1 == 7
 letters == "a"
 letters != "c"
-letters %in% c("a","b","c","z")
+letters %in% c("a","b","c","z") #%in% means set membership
 vector1 %in% 1:6
 
 
@@ -63,9 +63,9 @@ data("iris") # load it like this
 dat <- iris # can rename the object to be easier to type if you want
 
 # ways to get a peek at our data set
-names(dat)
-dim(dat)
-head(dat)
+names(dat) #its names of the categorical/row
+dim(dat) #dimension -  returns interger vector containing size of each dimesnion in '# rows, # columns'
+head(dat) # displays the first 6 rows, head(dataset, #rows)
 
 
 # You can access specific columns of a "data frame" by name using '$'
@@ -74,49 +74,49 @@ dat$Sepal.Length
 
 # You can also use square brackets to get specific 1-D or 2-D subsets of a data frame (rows and/or columns)
 dat[1,1] # [Rows, Columns]
-dat[1:3,5]
+dat[1:3,5] #means  1-3, column 5
 
-vector2[1]
-letters[1:7]
-letters[c(1,3,5,7)]
+vector2[1] #row 1
+letters[1:7] #rows 1-7
+letters[c(1,3,5,7)] #it's quoting those specific integers
 
 
 # Plotting ####
 
 # Can make a quick plot....just give vectors for x and y axes
-plot(x=dat$Petal.Length, y=dat$Sepal.Length)
-plot(x=dat$Species, y=dat$Sepal.Length)
+plot(x=dat$Petal.Length, y=dat$Sepal.Length) #creates scatterplot, both types are numeric
+plot(x=dat$Species, y=dat$Sepal.Length) #creates box and wisker plot, 'plot' is smart and chooses it when catergorical variable is used
 
 
 # Object "Classes" ####
 
 #check the classes of these vectors
-class(dat$Petal.Length)
-class(dat$Species)
+class(dat$Petal.Length) #it is numeric
+class(dat$Species) #it is factor(catergorical)
 
 # plot() function behaves differently depending on classes of objects given to it!
 
 # Check all classes (for each column in dat)
-str(dat)
+str(dat) #structure - command to check structure. Gives object type, dimesnions (rows, columns), and column details
 
 # "Classes" of vectors can be changed if needed (you'll need to, for sure, at some point!)
 
 # Let's try
 nums <- c(1,1,2,2,2,2,3,3,3,4,4,4,4,4,4,4,5,6,7,8,9)
-class(nums) # make sure it's numeric
+class(nums) # checks what class it is
 
 # convert to a factor
-as.factor(nums) # show in console
+as.factor(nums) # forces values to be factor/categorical
 nums_factor <- as.factor(nums) #assign it to a new object as a factor
 class(nums_factor) # check it
 
 
 # convert numeric to character
-as.character(vector1)
+as.character(vector1) #converts a variable into plain text (character string)
 as.character(vector1) + 5
 
 # convert character to numeric
-as.numeric(vector3)
+as.numeric(vector3) #didn't work, can't force characters into math. Use as.factor
 
 
 
@@ -132,31 +132,33 @@ plot(nums_factor)
 # Simple numeric functions
 # R is a language built for data analysis and statistics so there is a lot of functionality built-in
 
-max(vector1)
-min(vector1)
-median(vector1)
-mean(vector1)
-range(vector1)
-summary(vector1)
+max(vector1) #highest value
+min(vector1) #lowest value
+median(vector1) #median
+mean(vector1) #mean
+range(vector1) #the range of the domain
+summary(vector1) #gives a bunch of info
 
 # cumulative functions
-cumsum(vector1)
-cumprod(vector1)
-cummin(vector1)
-cummax(vector1)
+cumsum(vector1) #keeps a running total by adding the next # to the current total, shows each step
+cumprod(vector1) #keeps a running total by multiplying by the next #
+cummin(vector1) #tracks smallest number seen so far when read left to right
+cummax(vector1) #tracks largest number seen so far as read left to right
 
 # even has built-in statistical distributions (we will see more of these later)
 dbinom(50,100,.5) # probability of getting exactly 50 heads out of 100 coin flips
 
 
-
+seq()# sequence, a function to generate ordered sequences of numbers
+# sec(from =, to =, by =,) where to start, stop, and what to count by. to count down use negative value for by
 
 # YOUR REMAINING HOMEWORK ASSIGNMENT (Fill in with code) ####
 
 # 1.  Get a subset of the "iris" data frame where it's just even-numbered rows
 
+data("iris")
 seq(2,150,2) # here's the code to get a list of the even numbers between 2 and 150
-
+str(iris)
 
 
 # 2.  Create a new object called iris_chr which is a copy of iris, except where every column is a character class
