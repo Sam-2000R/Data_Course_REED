@@ -21,12 +21,32 @@ ggplot(A_states, aes(x= Last_Update,
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Question 4
-sick %>%
-  group_by(Province_State) %>%
-
-
 state_max_fatality_rate <- sick %>%
-  rename(State = Province_State,
-         maximum_fatality_ratio = group_by(Province_State) %>%
-           summarize(avg = mean(Case_Fatality_Ratio, na.rm = TRUE))) %>%
-  arrange(.by_group = TRUE, desc(factor(maximum_fatality_ratio)))
+  group_by(Province_State) %>%
+  summarize(Maximum_Fatality_Ratio = max(Case_Fatality_Ratio, na.rm = TRUE)) %>%
+  arrange(desc(Maximum_Fatality_Ratio))
+view(state_max_fatality_rate)
+
+# Question 5
+ggplot(state_max_fatality_rate, aes(
+  x = factor(Province_State, levels = unique(Province_State)),
+  y = Maximum_Fatality_Ratio,
+  fill = Maximum_Fatality_Ratio)) +
+  geom_col() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "State", y = "Maximum Fatality Ratio") +
+  scale_fill_distiller(palette = "Oranges", direction = 1)
+
+# Question 6
+deaths_over_time <- sick %>%
+  group_by(Last_Update) %>%
+  summarize(Deaths = sum(Deaths, na.rm = TRUE)) %>%
+  arrange(desc(Last_Update))
+
+ggplot(deaths_over_time, aes(
+  x = as.Date(Last_Update),
+  y = Deaths)) +
+  geom_line(size = 2, alpha = 1, color = "red") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  labs(x = "Time", y = "Deaths") 
+
