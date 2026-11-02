@@ -1,0 +1,7 @@
+Idea for data analysis final project: Find out how air pollution along the Wasatch front influences asthma ER visits. Air pollution is measured in PM 2.5, retrieved from a data source from the EPA (https://www.epa.gov/outdoor-air-quality-data/download-daily-data). Data for asthma ER visits would be found here (https://ibis.utah.gov/epht-view/query/result/ed/EDCntyED/Count.html) I would compare ER visits on the same season over a series of years. For my reference I need to put user defined diagnoses code 493. I can pull data up to 2014, because data past that comes from a different website and has to be requested with a 4 week timeframe.
+
+I have data, so I'll work on it directly instead of making fake data.
+
+I'll need to generate a ggplot for my data.
+
+I'll pull from weber, davis, salt lake, utah counties.
