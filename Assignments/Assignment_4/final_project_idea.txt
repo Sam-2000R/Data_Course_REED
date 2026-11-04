@@ -2,6 +2,9 @@ Idea for data analysis final project: Find out how air pollution along the Wasat
 
 I have data, so I'll work on it directly instead of making fake data.
 
-I'll need to generate a ggplot for my data.
-
 I'll pull from weber, davis, salt lake, utah counties.
+
+For my ggplot, I expect months with higher pm2.5 concentrations to have more asthma visits. I'll use a scatterplot.
+My initial graph shows one expected result: pm2.5 spikes in the winter, shown in seasonal_plot.png.
+
+cleaned data is asthma_er__county_clean.
