@@ -1,8 +1,7 @@
 library(tidyverse)
 library(here)
 
-# Works on its own from the cleaned file in this folder; data_cleaning.R
-# does not need to have been run in the same session
+
 here::i_am("Assignments/Assignment_4/build_inital_graph.R")
 a4 <- function(...) here("Assignments", "Assignment_4", ...)
 
