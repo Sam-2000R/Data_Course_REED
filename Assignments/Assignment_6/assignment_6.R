@@ -51,21 +51,20 @@ ggsave("Seperate_Substrate_Graph.png", plot = follow_example,
 
 #4
 graph_4 <- tidy2 %>%
-  filter(Substrate == "Itaconic Acid") %>% 
-  group_by(Hour, Dilution) %>%
-  summarize(Absorbance = mean(Absorbance), .groups = "drop") %>%
+  filter(Substrate == 'Itaconic Acid') %>%
+  group_by(Hour, Dilution, `Sample ID`) %>%
+  summarize(mean_absorbance = mean(Absorbance, .groups = "drop")) %>%
   ggplot(aes(
     x = Hour,
-    y = Absorbance,
+    y = mean_absorbance,
     color = `Sample ID`
   )) +
-  facet_wrap(~Substrate) +
+  facet_wrap(~Dilution) +
   geom_line(linewidth = 1) +
-  labs(x = "Time", y = "Absorbance", color = "Type") +
-  transition_reveal(hour, range = NULL, keep_last = TRUE) +
+  labs(x = "Time", y = "Mean_absorbance", color = "Sample ID") +
+  transition_reveal(Hour, range = NULL, keep_last = TRUE) +
   ease_aes('linear') +
   theme_minimal()
 
-print(follow_example)
-ggsave("Seperate_Substrate_Graph.png", plot = follow_example,
-       width = 10, height = 8, dpi = 300)
+animate(graph_4, renderer = gifski_renderer())
+anim_save("graph_4.gif")
